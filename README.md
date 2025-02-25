@@ -25,12 +25,12 @@ To interact with AIUI, simply start speaking after navigating to the app in your
 ## Quick Start
 1. Clone the repo
 ```bash
-git clone git@github.com:lspahija/AIUI.git
+git clone https://github.com/shane-reaume/AIUI_Ollama.git
 ```
 
-2. Change directory to AIUI
+2. Change directory to AIUI_Ollama
 ```bash
-cd AIUI
+cd AIUI_Ollama
 ```
 
 3. Edit the `docker-compose.yml` file to point to your Ollama server
