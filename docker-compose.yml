@@ -2,9 +2,7 @@ version: '3'
 
 services:
   aiui:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: aiui
     ports:
       - "8000:80"
     environment:
@@ -15,8 +13,8 @@ services:
       - TTS_PROVIDER=EDGETTS
       - EDGETTS_VOICE=en-US-EricNeural
     restart: unless-stopped
-    volumes:
-      - ./backend:/app  # Uncomment this for development to hot-reload code changes
+    # volumes:
+    #   - ./backend:/app  # Uncomment this for development to hot-reload code changes
 
 # Uncomment this if you want to run Ollama in the same compose stack
 # Note: This requires significant resources (~8GB+ RAM) depending on model size

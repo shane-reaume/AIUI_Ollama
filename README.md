@@ -45,12 +45,28 @@ environment:
   - AI_COMPLETION_MODEL=deepseek-r1:8b  # Change this to your preferred model
 ```
 
-4. Start the container with Docker Compose
+4. Build the Docker image
+```bash
+docker build -t aiui .
+```
+
+5. Start the container with Docker Compose
 ```bash
 docker-compose up -d
 ```
 
-5. Navigate to `localhost:8000` in a modern browser
+Alternatively, you can use the following Docker run command that's known to work:
+```bash
+docker run -d -e AI_PROVIDER=ollama -e OLLAMA_HOST=http://your-ollama-server:11434 -e AI_COMPLETION_MODEL=deepseek-r1:8b -e STT_PROVIDER=vosk -e TTS_PROVIDER=EDGETTS -e EDGETTS_VOICE=en-US-EricNeural -p 8000:80 aiui
+```
+
+Or use the provided helper script:
+```bash
+chmod +x run_docker.sh
+./run_docker.sh
+```
+
+6. Navigate to `localhost:8000` in a modern browser
 
 ## Configuration Options
 
