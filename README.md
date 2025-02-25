@@ -1,4 +1,4 @@
-![AIUI Ollama Logo]("./AIUI_Ollama.png")
+![AIUI Ollama Logo](AIUI_Ollama.png)
 
 # A Private Voice Interface for AI
 
