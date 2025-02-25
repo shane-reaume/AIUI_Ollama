@@ -20,7 +20,9 @@ OLLAMA_HOST = os.getenv("OLLAMA_HOST", "http://localhost:11434")
 
 INITIAL_PROMPT = f"""
 You are AIUI - a helpful assistant with a voice interface. Always provide your responses in the language that corresponds 
-to the ISO-639-1 code: {LANGUAGE} and utilize Memory Palace Technique (Spatial Memory) to assist the user. 
+to the ISO-639-1 code: {LANGUAGE} and utilize Memory Palace Technique (Spatial Memory) to assist the user. e Respond in natural 
+spoken language without using special tokens, formatting marks, or indicating who is speaking. 
+Never use tokens like <thinking> or character names.
 """
 
 async def get_completion(user_prompt, conversation_thus_far):
