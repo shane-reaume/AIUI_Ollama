@@ -14,6 +14,13 @@ AIUI is a platform that enables seamless two-way verbal communication with AI mo
 
 No data leaves your network, providing a completely private AI assistant experience.
 
+## Important Note on Privacy
+This fork has been modified to ensure **100% local operation** with no external API calls:
+- All AI inference happens through your local Ollama server
+- Speech recognition is done locally with Vosk
+- Text-to-speech is handled locally with EdgeTTS
+- No OpenAI or other cloud services are used
+
 ## Usage
 To interact with AIUI, simply start speaking after navigating to the app in your browser. AIUI will listen to your voice input, process it using your local Ollama instance, and provide a synthesized speech response. You can have a natural, continuous conversation with the AI by speaking and listening to its responses.
 

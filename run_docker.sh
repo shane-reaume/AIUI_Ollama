@@ -11,10 +11,10 @@ echo "Running the container..."
 docker run -d \
   -e AI_PROVIDER=ollama \
   -e OLLAMA_HOST=http://192.168.0.55:11434 \
-  -e AI_COMPLETION_MODEL=deepseek-r1:8b \
+  -e AI_COMPLETION_MODEL=reefer/monica:latest \
   -e STT_PROVIDER=vosk \
   -e TTS_PROVIDER=EDGETTS \
-  -e EDGETTS_VOICE=en-US-EricNeural \
+  -e EDGETTS_VOICE=en-US-JennyNeural \
   -p 8000:80 \
   --name aiui \
   aiui

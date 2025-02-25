@@ -3,7 +3,8 @@ set -e
 
 CONTAINER_LABEL="created_by=aiui_script"
 
-TTS_OPTIONS=("gTTS" "ELEVENLABS" "STREAMELEMENTS" "EDGETTS")
+# Only include local TTS options
+TTS_OPTIONS=("EDGETTS")
 
 check_env_var() {
     if [[ -z "${!1}" ]]; then
@@ -28,15 +29,8 @@ build_docker() {
 }
 
 run_docker() {
-    if [ "$1" == "gTTS" ]; then
-        docker run -d -e AI_COMPLETION_MODEL=${AI_COMPLETION_MODEL} -e OPENAI_API_KEY=${OPENAI_API_KEY} -e TTS_PROVIDER=gTTS -p 8000:80 --label "$CONTAINER_LABEL" aiui
-    elif [ "$1" == "ELEVENLABS" ]; then
-        check_env_var "ELEVENLABS_API_KEY"
-        docker run -d -e AI_COMPLETION_MODEL=${AI_COMPLETION_MODEL} -e OPENAI_API_KEY=${OPENAI_API_KEY} -e TTS_PROVIDER=ELEVENLABS -e ELEVENLABS_API_KEY=${ELEVENLABS_API_KEY} -e ELEVENLABS_VOICE=EXAVITQu4vr4xnSDxMaL -p 8000:80 --label "$CONTAINER_LABEL" aiui
-    elif [ "$1" == "STREAMELEMENTS" ]; then
-        docker run -d -e AI_COMPLETION_MODEL=${AI_COMPLETION_MODEL} -e OPENAI_API_KEY=${OPENAI_API_KEY} -e TTS_PROVIDER=STREAMELEMENTS -p 8000:80 --label "$CONTAINER_LABEL" aiui
-    elif [ "$1" == "EDGETTS" ]; then
-        docker run -d -e AI_COMPLETION_MODEL=${AI_COMPLETION_MODEL} -e OPENAI_API_KEY=${OPENAI_API_KEY} -e TTS_PROVIDER=EDGETTS -e EDGETTS_VOICE=en-US-EricNeural -p 8000:80 --label "$CONTAINER_LABEL" aiui
+    if [ "$1" == "EDGETTS" ]; then
+        docker run -d -e AI_PROVIDER=ollama -e OLLAMA_HOST=${OLLAMA_HOST:-http://localhost:11434} -e AI_COMPLETION_MODEL=${AI_COMPLETION_MODEL:-deepseek-r1:8b} -e TTS_PROVIDER=EDGETTS -e EDGETTS_VOICE=${EDGETTS_VOICE:-en-US-EricNeural} -e STT_PROVIDER=vosk -p 8000:80 --label "$CONTAINER_LABEL" aiui
     else
         echo "Invalid argument. Please provide one of the following:"
         for i in "${TTS_OPTIONS[@]}"
@@ -47,7 +41,7 @@ run_docker() {
     fi
 }
 
-check_env_var "OPENAI_API_KEY"
+# No longer need to check for OpenAI API key
 remove_containers "$CONTAINER_LABEL"
 build_docker
-run_docker "$1"
+run_docker "${1:-EDGETTS}"  # Default to EDGETTS if no argument provided

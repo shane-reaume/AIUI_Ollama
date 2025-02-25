@@ -5,25 +5,15 @@ import os
 import time
 
 import httpx
-# Keep OpenAI import for backward compatibility
-try:
-    import openai
-    OPENAI_AVAILABLE = True
-except ImportError:
-    OPENAI_AVAILABLE = False
 
-# Configure AI provider
-AI_PROVIDER = os.getenv("AI_PROVIDER", "openai").lower()  # Options: 'openai' or 'ollama'
-AI_COMPLETION_MODEL = os.getenv("AI_COMPLETION_MODEL", "gpt-3.5-turbo")
+# Configure AI provider - force Ollama only
+AI_PROVIDER = "ollama"  # Only option now: 'ollama'
+AI_COMPLETION_MODEL = os.getenv("AI_COMPLETION_MODEL", "llama3:8b")
 LANGUAGE = os.getenv("LANGUAGE", "en")
 OLLAMA_HOST = os.getenv("OLLAMA_HOST", "http://localhost:11434")
 
-INITIAL_PROMPT = f"""
-You are AIUI - a helpful assistant with a voice interface. Always provide your responses in the language that corresponds 
-to the ISO-639-1 code: {LANGUAGE} and utilize Memory Palace Technique (Spatial Memory) to assist the user. e Respond in natural 
-spoken language without using special tokens, formatting marks, or indicating who is speaking. 
-Never use tokens like <thinking> or character names.
-"""
+INITIAL_PROMPT = f"""You are a confidant assistant with a voice interface so respond in a natural conversational tone, speaking in the language that corresponds 
+to the ISO-639-1 code: {LANGUAGE} and utilizes Interactive Engagement as this should be a conversation."""
 
 async def get_completion(user_prompt, conversation_thus_far):
     if _is_empty(user_prompt):
@@ -40,23 +30,8 @@ async def get_completion(user_prompt, conversation_thus_far):
     messages.extend(json.loads(base64.b64decode(conversation_thus_far)))
     messages.append({"role": "user", "content": user_prompt})
 
-    if AI_PROVIDER == "ollama":
-        return await _get_ollama_completion(messages, start_time)
-    else:
-        # Default to OpenAI
-        if not OPENAI_AVAILABLE:
-            raise ImportError("OpenAI package is not installed but AI_PROVIDER is set to 'openai'")
-        return await _get_openai_completion(messages, start_time)
-
-async def _get_openai_completion(messages, start_time):
-    logging.debug("calling OpenAI model %s", AI_COMPLETION_MODEL)
-    res = await openai.ChatCompletion.acreate(model=AI_COMPLETION_MODEL, messages=messages, timeout=15)
-    logging.info("response received from %s %s %s %s", AI_COMPLETION_MODEL, "in", time.time() - start_time, "seconds")
-
-    completion = res['choices'][0]['message']['content']
-    logging.info('%s %s %s', AI_COMPLETION_MODEL, "response:", completion)
-
-    return completion
+    # Only use Ollama for completion
+    return await _get_ollama_completion(messages, start_time)
 
 async def _get_ollama_completion(messages, start_time):
     logging.debug("calling Ollama model %s at %s", AI_COMPLETION_MODEL, OLLAMA_HOST)
