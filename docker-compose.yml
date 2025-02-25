@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  aiui:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:80"
+    environment:
+      - AI_PROVIDER=ollama
+      - OLLAMA_HOST=http://192.168.0.55:11434  # Change this to your Ollama host
+      - AI_COMPLETION_MODEL=deepseek-r1:8b  # Change this to your preferred model
+      - STT_PROVIDER=vosk
+      - TTS_PROVIDER=EDGETTS
+      - EDGETTS_VOICE=en-US-EricNeural
+    restart: unless-stopped
+    volumes:
+      - ./backend:/app  # Uncomment this for development to hot-reload code changes
+
+# Uncomment this if you want to run Ollama in the same compose stack
+# Note: This requires significant resources (~8GB+ RAM) depending on model size
+#  ollama:
+#    image: ollama/ollama:latest
+#    ports:
+#      - "11434:11434"
+#    volumes:
+#      - ./ollama_models:/root/.ollama
+#    restart: unless-stopped 
