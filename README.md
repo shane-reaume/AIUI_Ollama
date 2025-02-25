@@ -1,6 +1,4 @@
-<p align="center">
-  <img src="https://github.com/lspahija/AIUI/assets/44912218/4a8537fc-8438-4f27-bdfb-32d4418fb06b" alt="AIUI">
-</p>
+![AIUI Ollama Logo]("./AIUI_Ollama.png")
 
 # A Private Voice Interface for AI
 
@@ -15,9 +13,6 @@ AIUI is a platform that enables seamless two-way verbal communication with AI mo
 - **[EdgeTTS](https://github.com/rany2/edge-tts)** for local text-to-speech
 
 No data leaves your network, providing a completely private AI assistant experience.
-
-## Demo Video
-https://github.com/lspahija/AIUI/assets/44912218/0c984aed-9785-4dd1-983a-198414e5b573
 
 ## Usage
 To interact with AIUI, simply start speaking after navigating to the app in your browser. AIUI will listen to your voice input, process it using your local Ollama instance, and provide a synthesized speech response. You can have a natural, continuous conversation with the AI by speaking and listening to its responses.
