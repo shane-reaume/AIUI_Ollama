@@ -8,10 +8,11 @@ services:
     environment:
       - AI_PROVIDER=ollama
       - OLLAMA_HOST=http://192.168.0.55:11434  # Change this to your Ollama host
-      - AI_COMPLETION_MODEL=deepseek-r1:8b  # Change this to your preferred model
+      - AI_COMPLETION_MODEL=llama3:8b  # Change this to your preferred model
       - STT_PROVIDER=vosk
       - TTS_PROVIDER=EDGETTS
-      - EDGETTS_VOICE=en-US-EricNeural
+      - EDGETTS_VOICE=en-US-ChristopherNeural
+      - LANGUAGE=en
     restart: unless-stopped
     # volumes:
     #   - ./backend:/app  # Uncomment this for development to hot-reload code changes
